@@ -1,0 +1,48 @@
+﻿using ECommerceAPI.Models;
+using ECommerceAPI.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ECommerceAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PaymentController : ControllerBase
+    {
+        public PaymentServices _transactionServices;
+        public PaymentController(PaymentServices PaymentService)
+        {
+            _transactionServices = PaymentService;
+        }
+        [HttpPost("SaveTransaction")]
+        public IActionResult SaveTransaction(Payment Payment)
+        {
+            return Ok(_transactionServices.SaveTransaction(Payment));
+        }
+
+        [HttpPost("DeleteTransaction")]
+        public IActionResult DeleteTransaction(int CartId)
+        {
+            return Ok(_transactionServices.DeleteTransaction(CartId));
+        }
+
+        [HttpPost("UpdateTransaction")]
+        public IActionResult UpdateTransaction(Payment transaction)
+        {
+            return Ok(_transactionServices.UpdateTransaction(transaction));
+        }
+
+        [HttpGet("GetTransaction")]
+        public IActionResult GetTransaction(int TransactionId)
+        {
+            return Ok(_transactionServices.GetTransaction(TransactionId));
+        }
+
+        [HttpGet("GetAllTransaction")]
+        public List<Payment> GetAllTransaction()
+        {
+            return _transactionServices.GetAllTransaction();
+        }
+
+    }
+}
